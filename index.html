@@ -1,0 +1,475 @@
+<!doctype html>
+<!--
+  Mayi Expériences · L'invitation (v5, « Le faire-part », bordeaux et or). Voir BRIEF.md.
+  Moteur : scroll-craft (scrollcraft.js / scrollcraft.css, jamais modifiés). Geste propre : js/invitation.js.
+  La v4 « Le pagne » est conservée dans index-v4-pagne.html. Textes à valider : textes.md.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Votre invitation de mariage · Mayi Expériences</title>
+<meta name="description" content="Vos prénoms, une date : votre invitation de mariage arrive dans une enveloppe de velours, que vos invités ouvrent du bout du doigt.">
+<meta property="og:title" content="Un jour unique mérite une invitation unique.">
+<meta property="og:description" content="Essayez-la avec vos prénoms : vingt secondes suffisent.">
+<meta property="og:image" content="https://nemo-bit-arch.github.io/mayi/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nemo-bit-arch.github.io/mayi/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#3d0b14">
+<link rel="icon" href="marque/logo-mayilabs-v2.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/v5/enveloppe.webp">
+<link rel="stylesheet" href="scrollcraft.css">
+<link rel="stylesheet" href="css/invitation.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" integrity="sha384-8FWZA6BGMXhsfO+BLtrJK0We6gg5o1JyO8xQm6peWDEUs17ACA5ziE/NIAkl9z2k" crossorigin="anonymous" defer></script>
+</head>
+<body data-etape="carton">
+<span data-sc-progress></span>
+
+<!-- ================================================================
+     LE RUBAN : navigation. Un marque-page de satin cousu au bord droit.
+     ================================================================ -->
+<nav class="ruban-nav" aria-label="Les cartes de l'invitation">
+  <button class="ruban-nav__ruban" type="button" aria-expanded="false" aria-controls="ruban-cartes">
+    <span class="ruban-nav__satin" aria-hidden="true"></span>
+    <span class="ruban-nav__libelle">Les cartes</span>
+  </button>
+  <ol class="ruban-nav__cartes" id="ruban-cartes" hidden>
+    <li><a href="#nous">Nous deux</a></li>
+    <li><a href="#date">La date</a></li>
+    <li><a href="#programme">Le programme</a></li>
+    <li><a href="#lieu">Le lieu</a></li>
+    <li><a href="#album">L’album</a></li>
+    <li><a href="#voeux">Les vœux</a></li>
+    <li><a href="#reponse">Votre réponse</a></li>
+    <li class="ruban-nav__mayi"><a class="lien-whatsapp" href="#" target="_blank" rel="noopener">Écrire à Mayi Expériences</a></li>
+  </ol>
+</nav>
+
+<!-- ================================================================
+     0 · LE CARTON : le couple écrit ses prénoms et signe à la plume.
+     ================================================================ -->
+<section class="carton-ecran" aria-labelledby="carton-titre">
+  <img class="carton-ecran__fleurs" data-theme-media src="assets/img/v5/fleurs.webp" alt="" width="1200" height="1600">
+  <form class="carton" novalidate>
+    <p class="carton__marque">Mayi Expériences · Votre invitation</p>
+    <h1 id="carton-titre" class="carton__titre">Qui célébrons-nous&nbsp;?</h1>
+    <p class="carton__promesse">Vos prénoms, une date&nbsp;: en vingt secondes, l'invitation que recevront vos invités arrive dans son enveloppe.</p>
+    <label class="ligne"><span class="vh">Votre prénom</span><input name="a" maxlength="24" autocomplete="given-name" placeholder="Votre prénom" required></label>
+    <span class="esperluette" aria-hidden="true">&amp;</span>
+    <label class="ligne"><span class="vh">Le prénom de l'être aimé</span><input name="b" maxlength="24" placeholder="Le prénom de l'être aimé"></label>
+    <fieldset class="types">
+      <legend class="vh">Type de mariage</legend>
+      <label><input type="radio" name="type" value="coutumier" checked><span>Coutumier</span></label>
+      <label><input type="radio" name="type" value="civil"><span>Civil</span></label>
+      <label><input type="radio" name="type" value="religieux"><span>Religieux</span></label>
+    </fieldset>
+    <fieldset class="themes">
+      <legend>Votre thème</legend>
+      <div class="themes__choix">
+        <label><input type="radio" name="theme" value="bordeaux" checked><span class="ruban-theme ruban-theme--bordeaux" aria-hidden="true"></span><span class="themes__nom">Bordeaux et or</span></label>
+        <label><input type="radio" name="theme" value="emeraude"><span class="ruban-theme ruban-theme--emeraude" aria-hidden="true"></span><span class="themes__nom">Émeraude et or</span></label>
+      </div>
+    </fieldset>
+    <label class="ligne ligne-date"><span>La date dont vous rêvez</span><input name="date" type="date" required></label>
+    <p class="aide" aria-live="polite"></p>
+    <div class="signature" data-objet>
+      <canvas class="signature-zone" aria-label="Zone de signature : glissez la plume de gauche à droite pour sceller le carton" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></canvas>
+      <svg class="plume" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 36 C 14 20, 22 10, 36 4 C 30 16, 22 26, 8 34 Z"/><path d="M4 36l8-6"/></svg>
+      <span class="signature-consigne">Signez à la plume pour sceller le carton.</span>
+    </div>
+  </form>
+</section>
+
+<main id="invitation" hidden>
+
+  <!-- ================================================================
+       1 · L'ENVELOPPE : pin. Velours en relief, cachet à briser.
+       ================================================================ -->
+  <section class="acte acte--enveloppe" data-sc-act="pin" data-sc-span="1.1" aria-labelledby="enveloppe-titre">
+    <div data-sc-stage class="enveloppe-scene">
+      <div class="enveloppe" data-relief>
+        <img class="enveloppe__velours" data-theme-media data-alt-emeraude="Une enveloppe de velours émeraude, gaufrée de roses, fermée par un cachet de cire dorée." src="assets/img/v5/enveloppe.webp" alt="Une enveloppe de velours bordeaux, gaufrée de roses, fermée par un cachet de cire dorée." width="1200" height="1600">
+        <span class="enveloppe__rabat" aria-hidden="true"></span>
+        <span class="enveloppe__lumiere" aria-hidden="true"></span>
+      </div>
+      <div class="enveloppe__etiquette">
+        <p class="enveloppe__pour">Pour <span data-invite>Nadège</span></p>
+        <h2 id="enveloppe-titre" class="enveloppe__noms" data-noms></h2>
+      </div>
+      <button class="cachet" type="button" data-objet aria-label="Presser le cachet de cire pour ouvrir l'enveloppe">
+        <span class="cachet__halo" aria-hidden="true"></span>
+        <svg class="cachet__fente" viewBox="0 0 100 100" aria-hidden="true"><path pathLength="1" d="M52 4 L47 28 L57 44 L44 60 L54 76 L48 98"/></svg>
+      </button>
+      <div class="enveloppe__bas">
+        <!-- Chaque invité reçoit son propre code, caché dans son lien : ici, il est déjà inscrit. -->
+        <p class="enveloppe__code"><span>Votre code personnel</span> <b data-code-invite>AK-12</b></p>
+        <p class="enveloppe__consigne" aria-live="polite">Il est déjà inscrit&nbsp;: pressez le cachet de cire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       2 · L'OUVERTURE : scrub, le pic. L'enveloppe s'ouvre sous la main.
+       ================================================================ -->
+  <section class="acte acte--ouverture" data-sc-act="scrub" data-sc-span="2.8" data-sc-dwell="0.2" aria-label="L'ouverture de l'enveloppe">
+    <div data-sc-stage>
+      <!-- Mouvement réduit : pas de film, on montre directement l'enveloppe ouverte, la carte prête à porter les prénoms. -->
+      <picture>
+        <source data-theme-media media="(prefers-reduced-motion: reduce)" srcset="assets/img/v5/ouverture-fin.webp">
+        <img class="sc-stage__poster" data-theme-media src="assets/img/v5/ouverture-poster.webp" alt="L'enveloppe de velours ouverte, la carte d'invitation qui en sort.">
+      </picture>
+      <video data-theme-media data-sc-scrub data-sc-src="assets/films/ouverture.mp4" data-sc-src-mobile="assets/films/ouverture-m.mp4" muted playsinline preload="none"></video>
+      <div class="ouverture__carte">
+        <p data-sc-cue="0.78">
+          <span class="ouverture__convie">Votre invitation au mariage de</span>
+          <span class="ouverture__noms" data-noms></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       3 · NOUS DEUX : flow. Les prénoms, l'aquarelle, leur histoire.
+       ================================================================ -->
+  <section class="acte acte--nous carte-papier" id="nous" aria-labelledby="nous-titre">
+    <img class="carte-papier__fleurs" data-theme-media src="assets/img/v5/fleurs.webp" alt="" width="1200" height="1600" loading="lazy">
+    <div class="nous" data-sc-in>
+      <p class="petites-capitales">Ont la joie de vous convier à leur mariage</p>
+      <h2 id="nous-titre" class="calligraphie nous__noms" data-noms></h2>
+      <p class="nous__type petites-capitales" data-type></p>
+      <figure class="nous__aquarelle">
+        <img data-theme-media data-alt-emeraude="Aquarelle : les mariés, de dos, main dans la main, sous une arche de roses blanches et de feuillage émeraude." src="assets/img/v5/couple.webp" alt="Aquarelle : les mariés, de dos, main dans la main, sous une arche de roses bordeaux." width="1200" height="1600" loading="lazy" data-sc-parallax="-0.06">
+      </figure>
+      <p class="nous__histoire">Tout a commencé par un regard, un soir à Libreville. Nous voulons vous offrir la suite, et la vivre entourés de ceux qui comptent.</p>
+      <p class="nous__invite"><span>Invitation de <b data-invite>Nadège</b> · Table <b data-table>7</b></span><small>Chaque invité reçoit la sienne, à son prénom. Nadège est ici une invitée d'exemple.</small></p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       4 · LA DATE : reveal. Le jour s'entoure d'un cœur à l'encre.
+       ================================================================ -->
+  <section class="acte acte--date carte-papier" id="date" data-sc-act="pin" data-sc-span="1.2" aria-labelledby="date-titre">
+    <div data-sc-stage class="date">
+      <h2 id="date-titre" class="calligraphie date__titre">Réservez la date</h2>
+      <div class="calendrier" role="img" aria-label="">
+        <p class="calendrier__mois"><span data-mois></span><span data-annee></span></p>
+        <ol class="calendrier__jours" aria-hidden="true"></ol>
+      </div>
+      <p class="date__heure petites-capitales">Accueil à <span data-accueil>15 h 00</span> · <span data-date-longue></span></p>
+      <div class="rebours" aria-label="Compte à rebours">
+        <p><b data-rebours="jours">0</b><span data-unite="jours">jours</span></p>
+        <p><b data-rebours="heures">0</b><span data-unite="heures">heures</span></p>
+        <p><b data-rebours="minutes">0</b><span data-unite="minutes">minutes</span></p>
+        <p><b data-rebours="secondes">0</b><span data-unite="secondes">secondes</span></p>
+      </div>
+      <a class="agenda" data-objet href="#" download="mariage.ics">
+        <svg viewBox="0 0 52 52" aria-hidden="true"><rect class="feuille-fond" x="8" y="8" width="36" height="40" rx="3"/><rect class="feuille-tete" x="8" y="8" width="36" height="11" rx="3"/><circle class="feuille-anneau" cx="18" cy="8" r="3"/><circle class="feuille-anneau" cx="34" cy="8" r="3"/><text class="feuille-jour" x="26" y="38" text-anchor="middle">12</text><text class="feuille-mois" x="26" y="45" text-anchor="middle">JUIN</text></svg>
+        <span>Inscrire la date à votre agenda</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       5 · LE PROGRAMME : pin. Un fil d'or se dessine d'étape en étape.
+       ================================================================ -->
+  <section class="acte acte--programme carte-papier" id="programme" data-sc-act="pin" data-sc-span="1.6" aria-labelledby="programme-titre">
+    <div data-sc-stage class="programme-scene">
+      <h2 id="programme-titre" class="calligraphie">Le programme</h2>
+      <p class="jour-j-etat" aria-live="polite"></p>
+      <div class="fil">
+        <svg class="fil__trace" viewBox="0 0 100 400" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0 C 90 50, 10 100, 50 150 S 90 250, 50 300 S 10 370, 50 400"/></svg>
+        <ol class="programme"></ol>
+      </div>
+      <div class="tenue">
+        <p class="petites-capitales">La tenue</p>
+        <p class="tenue__texte">Chaque famille porte son pagne officiel. Touchez le vôtre pour le commander.</p>
+        <ul class="pagnes">
+          <li>
+            <button class="pagne" type="button" data-objet aria-pressed="false">
+              <span class="pagne__recto">
+                <img class="pagne__tissu" src="assets/img/v5/pagne-a.webp" alt="" width="480" height="480">
+                <span class="pagne__famille" data-famille="a">Famille d’Awa</span>
+              </span>
+              <span class="pagne__verso" aria-live="polite">
+                <span class="pagne__bon">Bon de commande</span>
+                <span>Tantine Odile reçoit les commandes de la <span data-famille-min="a">famille d’Awa</span>.</span>
+                <span class="pagne__note">Votre message lui parvient sur WhatsApp ; son numéro reste privé.</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="pagne" type="button" data-objet aria-pressed="false">
+              <span class="pagne__recto">
+                <img class="pagne__tissu" src="assets/img/v5/pagne-b.webp" alt="" width="480" height="480">
+                <span class="pagne__famille" data-famille="b">Famille de Karl</span>
+              </span>
+              <span class="pagne__verso" aria-live="polite">
+                <span class="pagne__bon">Bon de commande</span>
+                <span>Marc Obiang reçoit les commandes de la <span data-famille-min="b">famille de Karl</span>.</span>
+                <span class="pagne__note">Votre message lui parvient sur WhatsApp ; son numéro reste privé.</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <button class="ephemeride" type="button" data-objet aria-pressed="false">
+        <span class="feuillet" aria-hidden="true"><b class="feuillet-jour">12</b><i class="feuillet-mois">juin</i></span>
+        <span class="ephemeride-texte">Tournez la page&nbsp;: voici votre invitation le jour J.</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       6 · LE LIEU : scrub (vol). De l'océan jusqu'aux tables dressées.
+       ================================================================ -->
+  <section class="acte acte--lieu" id="lieu" data-sc-act="scrub" data-sc-span="2.2" data-sc-dwell="0.15" aria-labelledby="lieu-titre">
+    <div data-sc-stage>
+      <img class="sc-stage__poster" data-theme-media data-alt-emeraude="Le pavillon du bord de mer au crépuscule, les tables dressées d'émeraude et d'or." src="assets/img/v5/lieu-poster.webp" alt="Le pavillon du bord de mer au crépuscule, les tables dressées de bordeaux et d'or.">
+      <video data-theme-media data-sc-scrub data-sc-src="assets/films/lieu.mp4" data-sc-src-mobile="assets/films/lieu-m.mp4" muted playsinline preload="none"></video>
+      <div class="sc-scrim sc-scrim--bottom" aria-hidden="true"></div>
+      <div class="lieu__copie" data-sc-cue="0.15 0.85">
+        <p class="petites-capitales">Le lieu</p>
+        <h2 id="lieu-titre" class="calligraphie">Le Grand Salon</h2>
+        <p>Bord de mer, Libreville</p>
+      </div>
+    </div>
+  </section>
+  <section class="acte acte--adresse carte-papier" aria-label="L'adresse">
+    <div class="adresse" data-sc-in>
+      <img class="adresse__aquarelle" data-theme-media src="assets/img/v5/pavillon.webp" alt="Aquarelle du pavillon du Grand Salon, entre les cocotiers, face à l'océan." width="1200" height="1600" loading="lazy">
+      <p class="adresse__texte">Le Grand Salon<br>Boulevard du bord de mer, Libreville</p>
+      <p class="votre-table">Votre table&nbsp;: la <b data-table>7</b>, côté mer.</p>
+      <figure class="plan">
+        <span class="plan__coin plan__coin--hg" aria-hidden="true"></span><span class="plan__coin plan__coin--bd" aria-hidden="true"></span>
+        <iframe class="plan__carte" title="Plan Google Maps : boulevard du bord de mer, Libreville" src="https://www.google.com/maps?q=Boulevard%20de%20l%27Ind%C3%A9pendance%2C%20Libreville%2C%20Gabon&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <figcaption>Le plan, boulevard du bord de mer</figcaption>
+      </figure>
+      <a class="boussole" data-objet href="https://www.google.com/maps/dir/?api=1&amp;destination=Boulevard%20de%20l%27Ind%C3%A9pendance%2C%20Libreville%2C%20Gabon" target="_blank" rel="noopener">
+        <svg viewBox="0 0 52 52" aria-hidden="true"><circle class="rose-fond" cx="26" cy="26" r="24"/><circle class="rose-filet" cx="26" cy="26" r="19"/><path class="rose-branche-2" d="M26 26l12-12-5 12 5 12zM26 26L14 14l12 5 12-5zM26 26L14 38l5-12-5-12z"/><path class="rose-branche" d="M26 6l4 20-4 20-4-20zM6 26l20-4 20 4-20 4z"/><circle class="rose-axe" cx="26" cy="26" r="2.4"/><text class="rose-n" x="23.6" y="5.6">N</text></svg>
+        <span>Ouvrir l’itinéraire dans Google Maps</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       6 bis · L'ALBUM : les tirages des mariés, à balayer ; un tirage s'agrandit au toucher.
+       ================================================================ -->
+  <section class="acte acte--album carte-papier" id="album" aria-labelledby="album-titre">
+    <h2 id="album-titre" class="calligraphie">L’album</h2>
+    <p class="album__chapo">Quelques pages de notre histoire, en attendant de vous retrouver.</p>
+    <ol class="album" tabindex="0" aria-label="Les tirages des mariés : faites défiler de côté">
+      <li><button class="tirage" type="button" data-index="0" aria-label="Agrandir le tirage : Nos cafés du samedi">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/cafe-v.webp" data-grand="assets/img/album/cafe.webp" alt="Le marié murmure à l’oreille de la mariée, qui rit aux éclats, à la table d’un café lumineux." width="600" height="800" loading="lazy" style="object-position:50% 35%"></span>
+        <span class="tirage__legende">Nos cafés du samedi</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="1" aria-label="Agrandir le tirage : Libreville, au bord de l’océan">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/histoire-1-v.webp" data-grand="assets/img/album/histoire-1.webp" alt="Les mariés marchent pieds nus sur la plage de Libreville, main dans la main, au coucher du soleil." width="600" height="800" loading="lazy" style="object-position:50% 60%"></span>
+        <span class="tirage__legende">Libreville, au bord de l’océan</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="2" aria-label="Agrandir le tirage : Sur l’estuaire, à l’heure dorée">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/pirogue-v.webp" data-grand="assets/img/album/pirogue.webp" alt="Les mariés assis dans une pirogue sur l’estuaire, elle appuyée contre son épaule." width="600" height="800" loading="lazy" style="object-position:50% 50%"></span>
+        <span class="tirage__legende">Sur l’estuaire, à l’heure dorée</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="3" aria-label="Agrandir le tirage : Le long du bord de mer">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/promenade-v.webp" data-grand="assets/img/album/promenade.webp" alt="Photographie en noir et blanc : les mariés marchent sur la promenade du bord de mer, il porte ses chaussures." width="600" height="800" loading="lazy" style="object-position:50% 40%"></span>
+        <span class="tirage__legende">Le long du bord de mer</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="4" aria-label="Agrandir le tirage : Le soir de la demande">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/demande-v.webp" data-grand="assets/img/album/demande.webp" alt="Le marié, un genou à terre, présente une bague ; la mariée, émue, porte la main à sa bouche." width="600" height="800" loading="lazy" style="object-position:50% 45%"></span>
+        <span class="tirage__legende">Le soir de la demande</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="5" aria-label="Agrandir le tirage : La promesse">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/alliance-v.webp" data-grand="assets/img/album/alliance.webp" alt="Le marié glisse une alliance d’or au doigt de la mariée." width="600" height="800" loading="lazy" style="object-position:50% 50%"></span>
+        <span class="tirage__legende">La promesse</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="6" aria-label="Agrandir le tirage : Le soir de nos fiançailles">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/histoire-2-v.webp" data-grand="assets/img/album/histoire-2.webp" alt="Les mariés rient front contre front, sur une terrasse éclairée de guirlandes." width="600" height="800" loading="lazy" style="object-position:50% 40%"></span>
+        <span class="tirage__legende">Le soir de nos fiançailles</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="7" aria-label="Agrandir le tirage : Pieds nus sur le sable">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/danse-v.webp" data-grand="assets/img/album/danse.webp" alt="Les mariés dansent pieds nus sur le sable mouillé, au soleil couchant." width="600" height="800" loading="lazy" style="object-position:50% 45%"></span>
+        <span class="tirage__legende">Pieds nus sur le sable</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="8" aria-label="Agrandir le tirage : À l’ombre du grand fromager">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/fromager-v.webp" data-grand="assets/img/album/fromager.webp" alt="Les mariés, vêtus du même pagne, main dans la main sous les racines d’un fromager géant." width="600" height="800" loading="lazy" style="object-position:50% 50%"></span>
+        <span class="tirage__legende">À l’ombre du grand fromager</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="9" aria-label="Agrandir le tirage : Dans le pagne des deux familles">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/couple-v.webp" data-grand="assets/img/album/couple.webp" alt="Les mariés côte à côte, vêtus du même pagne bordeaux, ocre et émeraude, dans un jardin tropical." width="600" height="800" loading="lazy" style="object-position:50% 30%"></span>
+        <span class="tirage__legende">Dans le pagne des deux familles</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="10" aria-label="Agrandir le tirage : Quelques jours avant la dot">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/mariee-v.webp" data-grand="assets/img/album/mariee.webp" alt="Portrait de la mariée, coiffée d’un foulard de pagne, parée d’or." width="600" height="800" loading="lazy" style="object-position:50% 25%"></span>
+        <span class="tirage__legende">Quelques jours avant la dot</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="11" aria-label="Agrandir le tirage : La liste de nos invités">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/liste-v.webp" data-grand="assets/img/album/liste.webp" alt="Les mains des mariés, une bague de fiançailles, posées près de la liste des invités et d’un stylo plume." width="600" height="800" loading="lazy" style="object-position:50% 50%"></span>
+        <span class="tirage__legende">La liste de nos invités</span>
+      </button></li>
+      <li><button class="tirage" type="button" data-index="12" aria-label="Agrandir le tirage : Un soir au Grand Salon">
+        <span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span><img src="assets/img/album/soir-v.webp" data-grand="assets/img/album/soir.webp" alt="La mariée en robe de satin émeraude et le marié en smoking, sur les marches du pavillon, à l’heure bleue." width="600" height="800" loading="lazy" style="object-position:50% 40%"></span>
+        <span class="tirage__legende">Un soir au Grand Salon</span>
+      </button></li>
+      <li class="tirage-attente"><span class="tirage__photo" aria-hidden="true"><span class="tirage__coin tirage__coin--hg"></span><span class="tirage__coin tirage__coin--hd"></span><span class="tirage__coin tirage__coin--bg"></span><span class="tirage__coin tirage__coin--bd"></span></span>
+        <span class="tirage__legende">Après le grand jour, les photos de nos invités viendront ici.</span></li>
+    </ol>
+    <p class="album__consigne">Touchez un tirage pour l’agrandir.</p>
+    <dialog class="visionneuse" aria-labelledby="visionneuse-legende">
+      <figure class="visionneuse__tirage">
+        <img class="visionneuse__photo" src="" alt="">
+        <figcaption id="visionneuse-legende" class="visionneuse__legende"></figcaption>
+      </figure>
+      <p class="visionneuse__compte" aria-live="polite"></p>
+      <div class="visionneuse__gestes">
+        <button class="coin-page coin-page--prec" type="button" data-objet aria-label="Tirage précédent"><svg viewBox="0 0 40 40" aria-hidden="true"><path class="coin-page__feuille" d="M4 4h32v32H4z"/><path class="coin-page__pli" d="M4 36V18L22 36z"/></svg></button>
+        <button class="reposer" type="button" data-objet><svg viewBox="0 0 40 40" aria-hidden="true"><path class="reposer__coin" d="M6 6h20L6 26z"/><path class="reposer__coin" d="M34 34H14l20-20z"/></svg><span>Reposer le tirage</span></button>
+        <button class="coin-page coin-page--suiv" type="button" data-objet aria-label="Tirage suivant"><svg viewBox="0 0 40 40" aria-hidden="true"><path class="coin-page__feuille" d="M4 4h32v32H4z"/><path class="coin-page__pli" d="M36 36V18L18 36z"/></svg></button>
+      </div>
+    </dialog>
+  </section>
+
+  <!-- ================================================================
+       7 · LES VŒUX : rangée à balayer. Les cartes des invités.
+       ================================================================ -->
+  <section class="acte acte--voeux carte-papier" id="voeux" aria-labelledby="voeux-titre">
+    <h2 id="voeux-titre" class="calligraphie">Les vœux</h2>
+    <p class="voeux__chapo">Les mots que vos invités vous laissent, au fil des semaines.</p>
+    <ol class="mots" tabindex="0" aria-label="Les vœux des invités : faites défiler de côté" aria-live="polite"></ol>
+    <form class="mot" novalidate>
+      <label class="vh" for="mot-texte">Votre mot pour les mariés</label>
+      <textarea id="mot-texte" name="texte" maxlength="140" rows="3" placeholder="Votre mot pour les mariés"></textarea>
+      <label class="vh" for="mot-nom">Votre nom</label>
+      <input id="mot-nom" name="nom" maxlength="40" placeholder="Votre nom" autocomplete="name">
+      <button class="plume-envoi" type="submit" data-objet>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path class="plume-envoi__barbe" d="M8 42 C 18 24, 28 12, 44 4 C 38 20, 28 32, 12 40 Z"/><path class="plume-envoi__tige" d="M8 42l12-10"/><path class="plume-envoi__encre" d="M4 46h18"/></svg>
+        <span>Déposer votre carte</span>
+      </button>
+    </form>
+  </section>
+
+  <!-- ================================================================
+       8 · VOTRE RÉPONSE : la carte, les cachets, l'enveloppe scellée.
+       ================================================================ -->
+  <section class="acte acte--reponse" id="reponse" aria-labelledby="reponse-titre">
+    <div class="reponse">
+      <div class="carte-reponse">
+        <h2 id="reponse-titre" class="calligraphie">Votre réponse</h2>
+        <p class="petites-capitales">Merci de répondre avant le <span data-avant></span></p>
+        <div class="choix" role="radiogroup" aria-label="Votre présence">
+          <button class="sceau" type="button" role="radio" aria-checked="false" data-presence="oui" data-objet>
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path class="cire" d="M40 4c6 0 8 5 13 6s10-1 13 4-1 9 1 14 7 8 5 13-7 5-9 10-1 11-7 13-9-2-14 1-7 7-13 7-8-5-13-7-10 1-13-4 1-9-1-14-7-8-5-13 7-5 9-10 1-11 7-13 9 2 14-1 7-7 13-7z"/><circle cx="40" cy="40" r="19" class="anneau-cire"/></svg>
+            <span>Avec joie</span>
+          </button>
+          <button class="sceau sceau--regret" type="button" role="radio" aria-checked="false" data-presence="non" data-objet>
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path class="cire" d="M40 4c6 0 8 5 13 6s10-1 13 4-1 9 1 14 7 8 5 13-7 5-9 10-1 11-7 13-9-2-14 1-7 7-13 7-8-5-13-7-10 1-13-4 1-9-1-14-7-8-5-13 7-5 9-10 1-11 7-13 9 2 14-1 7-7 13-7z"/><circle cx="40" cy="40" r="19" class="anneau-cire"/></svg>
+            <span>À regret</span>
+          </button>
+        </div>
+        <fieldset class="cote">
+          <legend class="petites-capitales">Votre famille</legend>
+          <label><input type="radio" name="cote" value="a" checked><span class="carton-famille" data-famille="a">Famille d’Awa</span></label>
+          <label><input type="radio" name="cote" value="b"><span class="carton-famille" data-famille="b">Famille de Karl</span></label>
+          <p class="cote__note">Indiquée par les mariés&nbsp;; vous pouvez la corriger.</p>
+        </fieldset>
+        <fieldset class="couverts">
+          <legend class="petites-capitales">Nombre de couverts</legend>
+          <label><input type="radio" name="couverts" value="1"><span class="carton-table">1</span></label>
+          <label><input type="radio" name="couverts" value="2" checked><span class="carton-table">2</span></label>
+          <label><input type="radio" name="couverts" value="3"><span class="carton-table">3</span></label>
+        </fieldset>
+        <p class="reponse__aide" aria-live="polite"></p>
+      </div>
+      <div class="enveloppe-reponse" data-objet>
+        <button class="enveloppe-reponse__fermer" type="button" aria-label="Glisser la carte dans l'enveloppe et la sceller">
+          <span class="enveloppe-reponse__corps" aria-hidden="true"></span>
+          <span class="enveloppe-reponse__rabat" aria-hidden="true"></span>
+          <img class="enveloppe-reponse__cachet" src="assets/img/v5/cachet.webp" alt="" width="360" height="360">
+        </button>
+        <p class="enveloppe-reponse__consigne">Touchez l'enveloppe pour sceller votre réponse.</p>
+      </div>
+    </div>
+
+    <div class="apres-reponse" hidden>
+      <p class="apres-reponse__titre calligraphie">Votre réponse est partie.</p>
+      <p class="pass-intro">Voici le Pass d'entrée que recevrait Nadège, votre invitée.</p>
+      <figure class="pass-cadre">
+        <img class="pass-image" alt="Pass d'entrée à vos prénoms">
+        <figcaption class="pass-repli" hidden>Appuyez longuement sur le Pass pour l'enregistrer.</figcaption>
+      </figure>
+      <button class="conserver" type="button" data-objet>
+        <svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 12h28"/><path d="M24 5l8 7-8 7"/><circle cx="36" cy="12" r="2"/></svg>
+        <span>Conservez votre Pass.</span>
+      </button>
+
+      <!-- La cagnotte : une enveloppe-cadeau nouée d'un ruban. Aucun montant n'est affiché. -->
+      <div class="cagnotte">
+        <p class="petites-capitales">Leur foyer</p>
+        <p class="cagnotte__texte">Votre présence leur suffit. Pour celles et ceux qui le souhaitent, <span data-prenom="a">Awa</span> et <span data-prenom="b">Karl</span> ont ouvert une cagnotte pour leur foyer.</p>
+        <button class="enveloppe-cadeau" type="button" data-objet aria-expanded="false" aria-controls="cagnotte-suite">
+          <svg viewBox="0 0 120 84" aria-hidden="true">
+            <rect class="ec-corps" x="4" y="12" width="112" height="68" rx="3"/>
+            <path class="ec-rabat" d="M4 14 L60 50 L116 14"/>
+            <rect class="ec-ruban" x="55" y="12" width="10" height="68"/>
+            <path class="ec-noeud" d="M60 40 C 46 26, 38 36, 50 44 C 40 50, 48 57, 60 46 C 72 57, 80 50, 70 44 C 82 36, 74 26, 60 40 Z"/>
+          </svg>
+          <span>Participer à leur foyer</span>
+        </button>
+        <p class="cagnotte__suite" id="cagnotte-suite" hidden>Votre geste passe par Airtel Money ou Moov Money, au nom des mariés. Le montant reste entre vous et eux.</p>
+      </div>
+
+      <section class="tableau" aria-labelledby="tableau-titre">
+        <h2 id="tableau-titre" class="calligraphie">De votre côté, tout se suit en direct.</h2>
+        <p class="tableau-bilan"><b>142</b> invitations ouvertes, <b>96</b> présences confirmées, <b>188</b> couverts, <b>11</b> régimes particuliers.</p>
+        <ul class="tableau-familles">
+          <li><span data-famille="a">Famille d’Awa</span><b>51</b> présences</li>
+          <li><span data-famille="b">Famille de Karl</span><b>45</b> présences</li>
+          <li><span>Cagnotte du foyer</span><b>37</b> participations</li>
+        </ul>
+        <ul class="registre">
+          <li data-etat="confirme" class="registre__nadege"><span class="marque" aria-hidden="true"></span><span class="r-nom">Nadège Mba</span><span class="r-etat">confirmée, deux couverts</span></li>
+          <li data-etat="confirme"><span class="marque" aria-hidden="true"></span><span class="r-nom">Marc Obiang</span><span class="r-etat">confirmé, végétarien</span></li>
+          <li data-etat="ouvert"><span class="marque" aria-hidden="true"></span><span class="r-nom">Famille Ndong</span><span class="r-etat">invitation ouverte hier</span></li>
+          <li data-etat="invite"><span class="marque" aria-hidden="true"></span><span class="r-nom">Tantine Odile</span><span class="r-etat">pas encore ouverte</span></li>
+          <li data-etat="excuse"><span class="marque" aria-hidden="true"></span><span class="r-nom">Jean-Paul Ella</span><span class="r-etat">excusé, en mission</span></li>
+        </ul>
+        <p class="tableau-note">Exemple de registre, tel que vous le verriez trois semaines avant le grand jour.</p>
+      </section>
+
+      <!-- Ce que le couple achète : dit une fois, juste avant l'appel. -->
+      <section class="offre" aria-labelledby="offre-titre">
+        <p class="petites-capitales">Mayi Expériences</p>
+        <h2 id="offre-titre" class="calligraphie">Ce que nous créons pour vous</h2>
+        <ol class="offre__liste">
+          <li><span class="offre__tete">Un lien et un code pour chaque invité.</span> Vous savez qui a ouvert, qui a répondu, et vous retirez un accès à tout moment.</li>
+          <li><span class="offre__tete">Votre histoire, à votre image.</span> Vos photos, votre lieu, les pagnes de vos familles et votre musique.</li>
+          <li><span class="offre__tete">La cagnotte de votre foyer,</span> par Airtel Money ou Moov Money.</li>
+          <li><span class="offre__tete">Le jour J,</span> chaque invité trouve sa table&nbsp;; le soir même, le film de votre fête.</li>
+          <li><span class="offre__tete">Votre adresse à vos prénoms,</span> <span data-domaine>awa-et-karl.com</span>, en français et en anglais.</li>
+        </ol>
+      </section>
+
+      <div class="final">
+        <h2 class="appel-final">Vous préparez votre mariage&nbsp;?<br><em>Créons votre invitation.</em></h2>
+        <div class="enveloppe-piste">
+          <a class="enveloppe-envoi" data-objet href="#" draggable="false" aria-label="Glisser l'enveloppe vers WhatsApp pour envoyer votre message">
+            <svg viewBox="0 0 64 44" aria-hidden="true"><rect x="2" y="2" width="60" height="40" rx="3"/><path d="M2 4l30 22L62 4"/><circle cx="32" cy="27" r="7" class="cachet-mini"/></svg>
+          </a>
+          <span class="piste-fin" aria-hidden="true">WhatsApp</span>
+        </div>
+        <p class="consigne">Glissez l'enveloppe jusqu'à WhatsApp&nbsp;: votre message est déjà rédigé.</p>
+        <p class="consigne-sub">Mayi Expériences, par MayiLabs</p>
+        <img class="logo-pied" src="marque/logo-mayilabs-v2.svg" alt="MayiLabs" width="120" height="66">
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="scrollcraft.js"></script>
+<script type="module" src="js/invitation.js"></script>
+</body>
+</html>

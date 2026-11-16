@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 132" role="img" aria-label="MayiLabs">
+  <title>MayiLabs</title>
+  <g fill="none" stroke="#c9a96a" stroke-linecap="round">
+    <path d="M80 92V54a20 20 0 0 1 40 0v38" stroke-width="3"/>
+    <path d="M120 92V54a20 20 0 0 1 40 0v38" stroke-width="3"/>
+    <path d="M100 92V60a20 20 0 0 1 40 0v32" stroke-width="1.5" stroke-opacity=".45"/>
+  </g>
+  <circle cx="120" cy="29" r="2.6" fill="#c9a96a"/>
+  <text x="120" y="124" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="600" font-size="20" letter-spacing="7.5" fill="#e9d8b4">MAYILABS</text>
+</svg>
